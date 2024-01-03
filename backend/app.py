@@ -3,8 +3,10 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from sqlalchemy.dialects.postgresql import UUID
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@db:5432/booksproject'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -36,7 +38,7 @@ def create_book():
     db.session.add(new_book)
     db.session.commit()
     result = book_schema.dump(new_book)
-    return jsonify({'message':result}), 201
+    return jsonify({'data':result}), 201
   except Exception as e:
     return jsonify({'error': str(e)}), 500
 
@@ -45,7 +47,7 @@ def get_books():
   try:
     books = Book.query.all()
     result = book_schema.dump(books, many=True)
-    return jsonify({'message': result}), 200
+    return jsonify({'data': result}), 200
   except Exception as e:
     return jsonify({'error': str(e)}), 500
     
@@ -61,7 +63,7 @@ def update_book(book_id):
 
       db.session.commit()
       result = book_schema.dump(book)
-      return jsonify({'message': result}), 200     
+      return jsonify({'data': result}), 200     
     return jsonify({'error': 'book not found'}), 404
   except Exception as e:
     return jsonify({'error': str(e)}), 500
@@ -73,7 +75,7 @@ def delete_book(book_id):
     if book:
       db.session.delete(book)
       db.session.commit()
-      return jsonify({'message': 'Book deleted successfully'}), 200
+      return jsonify({'data': 'Book deleted successfully'}), 200
     return jsonify({'error': 'book not found'}), 404
   except Exception as e:
     return jsonify({'error': str(e)}), 500
