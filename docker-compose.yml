@@ -17,7 +17,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - DB_URL=postgresql://postgres:password@db:5432/booksproject
+      - DB_URL=postgresql://postgres:password@db:5433/booksproject
     depends_on:
       - db
 
