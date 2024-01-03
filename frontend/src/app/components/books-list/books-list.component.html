@@ -1,0 +1,61 @@
+<div class="bk-container">
+  <h1>Welcome to your book list!</h1>
+  <button mat-raised-button class="bk-add-book" color="primary" (click)="openAddModal()">Add book</button>
+
+  <table mat-table [dataSource]="books" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef> Author </th>
+      <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="read">
+      <th mat-header-cell *matHeaderCellDef> Read </th>
+      <td mat-cell *matCellDef="let element"> {{element.read ? 'Yes' : 'No'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let book">
+        <button mat-raised-button color="primary" class="bk-update-book" mat-button (click)="openUpdateModal(book)">Update</button>
+        <button mat-raised-button color="warn" class="bk-delete-book" mat-button (click)="openDeleteModal(book.id)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Modals -->
+  <app-modal
+    *ngIf="isAddModalOpen"
+    (modalConfirmed)="onAddModalConfirm()"
+    (modalClosed)="onAddModalClose()"
+    [title]="'Add book'"
+  >
+    <app-form [bookForm]="bookForm"></app-form>
+  </app-modal>
+
+  <app-modal
+    *ngIf="isUpdateModalOpen"
+    (modalConfirmed)="onUpdateModalConfirm()"
+    (modalClosed)="onUpdateModalClose()"
+    [title]="'Update book'"
+  >
+    <app-form [bookForm]="bookForm"></app-form>
+  </app-modal>
+
+  <app-modal
+    *ngIf="isDeleteModalOpen"
+    (modalConfirmed)="onDeleteModalConfirm()"
+    (modalClosed)="onDeleteModalClose()"
+    [title]="'Delete book'"
+  >
+    <h2>Are you sure you want to delete this book?</h2>
+  </app-modal>
+
+</div>

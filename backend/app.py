@@ -38,7 +38,7 @@ def create_book():
     db.session.add(new_book)
     db.session.commit()
     result = book_schema.dump(new_book)
-    return jsonify({'data':result}), 201
+    return jsonify({'message':result}), 201
   except Exception as e:
     return jsonify({'error': str(e)}), 500
 
@@ -47,7 +47,7 @@ def get_books():
   try:
     books = Book.query.all()
     result = book_schema.dump(books, many=True)
-    return jsonify({'data': result}), 200
+    return jsonify({'message': result}), 200
   except Exception as e:
     return jsonify({'error': str(e)}), 500
     
@@ -63,7 +63,7 @@ def update_book(book_id):
 
       db.session.commit()
       result = book_schema.dump(book)
-      return jsonify({'data': result}), 200     
+      return jsonify({'message': result}), 200     
     return jsonify({'error': 'book not found'}), 404
   except Exception as e:
     return jsonify({'error': str(e)}), 500
@@ -75,7 +75,7 @@ def delete_book(book_id):
     if book:
       db.session.delete(book)
       db.session.commit()
-      return jsonify({'data': 'Book deleted successfully'}), 200
+      return jsonify({'message': 'Book deleted successfully'}), 200
     return jsonify({'error': 'book not found'}), 404
   except Exception as e:
     return jsonify({'error': str(e)}), 500

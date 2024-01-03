@@ -1,0 +1,16 @@
+<div [formGroup]="bookForm">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Enter title" value="" formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Author</mat-label>
+    <input matInput placeholder="Author" formControlName="author" required>
+  </mat-form-field>
+
+  <mat-radio-group formControlName="read" selectableMat>
+    <mat-radio-button value=true>Yes</mat-radio-button>
+    <mat-radio-button value=false>No</mat-radio-button>
+  </mat-radio-group>
+</div>

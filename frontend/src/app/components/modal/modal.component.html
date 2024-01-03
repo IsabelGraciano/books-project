@@ -1,0 +1,16 @@
+<div class="bk-modal">
+  <div class="bk-modal-content">
+    <div class="bk-modal-header">
+      <h2>{{title}}</h2>
+      <span class="bk-modal-close" (click)="closeModal()">&times;</span>
+    </div>
+
+    <div class="bk-modal-body">
+      <ng-content></ng-content>
+    </div>
+    <div class="bk-modal-footer">
+      <button mat-raised-button color="primary" class="bk-modal-confirm-button" (click)="confirmModal()">Confirm</button>
+      <button mat-raised-button color="warn" class="bk-modal-close-button" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
