@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "326d846a-2060-4fce-9ecd-e58b24dd61e4",
+		"name": "books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32121017"
+	},
+	"item": [
+		{
+			"name": "get books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+							"});",
+							"",
+							"pm.test(\"Each book has the required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    console.log(jsonData)",
+							"",
+							"    jsonData.message.forEach(function (book) {",
+							"        pm.expect(book).to.have.property(\"author\").that.is.a('string');",
+							"        pm.expect(book).to.have.property(\"id\").that.is.a('string');",
+							"        pm.expect(book).to.have.property(\"read\").that.is.a('boolean');",
+							"        pm.expect(book).to.have.property(\"title\").that.is.a('string');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/api/books",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response body has expected properties\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    console.log(jsonData)",
+							"    ",
+							"    pm.expect(jsonData.message).to.have.property(\"id\").that.is.a(\"string\");",
+							"    pm.expect(jsonData.message).to.have.property(\"title\").that.is.a(\"string\").and.equals(\"The hunger games\");",
+							"    pm.expect(jsonData.message).to.have.property(\"author\").that.is.a(\"string\").and.equals(\"Suzane Collins\");",
+							"    pm.expect(jsonData.message).to.have.property(\"read\").that.is.a(\"boolean\").and.equals(true);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"The hunger games\",\n    \"author\": \"Suzane Collins\",\n    \"read\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/api/book",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response body has expected properties\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(jsonData.message).to.have.property(\"id\").that.is.a(\"string\").and.equals(\"667af4bc-b939-46f9-93e1-230f045c471a\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"The hunger games\",\n    \"author\": \"Suzane Collins\",\n    \"read\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/api/book/667af4bc-b939-46f9-93e1-230f045c471a",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"book",
+						"667af4bc-b939-46f9-93e1-230f045c471a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete book",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/api/book/a4f6e905-89cf-46ca-bd7b-074736fa8f15",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"book",
+						"a4f6e905-89cf-46ca-bd7b-074736fa8f15"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
