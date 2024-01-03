@@ -5,6 +5,7 @@ from flask_marshmallow import Marshmallow
 from sqlalchemy.dialects.postgresql import UUID
 from flask_cors import CORS
 from flasgger import Swagger
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +14,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-swagger = Swagger(app)
+# swagger = Swagger(app)
+
+SWAGGER_URL="/swagger"
+API_URL="/static/swagger.json"
+
+swagger_ui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': 'books'
+    }
+)
+app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
 class Book(db.Model):
   __tablename__ = 'books'

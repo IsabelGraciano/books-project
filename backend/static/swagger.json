@@ -1,0 +1,118 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "books",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/books": {
+            "get": {
+                "description": "Returns all the books",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/book": {
+            "post": {
+              "description": "Created a new book",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "parameters": [
+                {
+                  "name": "access data",
+                  "in": "body",
+                  "description": "JSON data for the api",
+                  "required": true,
+                  "examples": {
+                    "example1": {
+                        "value": {
+                            "title": "New Title",
+                            "author": "New Author",
+                            "read": true
+                        }
+                    }
+                }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "User granted access"
+                },
+                "400": {
+                  "description": "Invalid request data"
+                }
+              }
+            }
+        },
+        "/api/book/{id}": {
+            "put": {
+                "description": "Updates details of a specific book",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the book to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "bookData",
+                        "in": "body",
+                        "description": "Updated details of the book",
+                        "required": true,
+                        "examples": {
+                            "example1": {
+                                "value": {
+                                    "title": "New Title",
+                                    "author": "New Author",
+                                    "read": true
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a specific book",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the book to be deleted",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
